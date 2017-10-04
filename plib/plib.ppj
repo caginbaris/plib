@@ -31,9 +31,10 @@ plib.lib: \
 # Build protection_functions.obj.
 # 
 output\protection_functions.obj: \
-	protection_functions.c
+	protection_functions.c \
+	protection_functions.h
 	$(CC) $(CCFLAGS) "$!" -Fo"$@"
 
-.EXCLUDEDFILES:
-
 .SILENT:
+
+.EXCLUDEDFILES:
