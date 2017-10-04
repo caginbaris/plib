@@ -31,7 +31,6 @@ int on_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,unsi
 	return out;
 
 }
-
 int off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,unsigned int *count){
 
 	int out;
@@ -57,7 +56,6 @@ int off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,uns
 	return out;
 
 }
-
 int on_off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,unsigned int *count){
 
 	int out;
@@ -82,3 +80,9 @@ int on_off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,
 	return out;
 
 }
+
+
+
+
+
+
