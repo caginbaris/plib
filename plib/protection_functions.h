@@ -8,17 +8,25 @@ int on_off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,
 
 struct fc50_inputParameters{
 
+float rms;
 float level;
 float delay;
-float drop_out_ratio;
-float drop_out_time;
-
-int rms_selection;
+float dropout_ratio;
+float dropout_time;
 
 };
 struct fc50_outputParameters{
-int pick_up:1;
-int trip:1;
+
+unsigned int initial_pick_up:1;
+unsigned int pick_up:1;
+unsigned int trip:1;
+unsigned int trip_latch:1;
+
+
+unsigned int dropout_counter;
+unsigned int trip_counter;
 
 
 };
+
+int fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50_out );

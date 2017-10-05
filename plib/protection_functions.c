@@ -82,6 +82,30 @@ int on_off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,
 }
 
 
+//function-4
+// Definite TOC
+
+int fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50_out ){
+
+
+	if(fc50_in.rms>fc50_in.level){ fc50_out->initial_pick_up=1;}
+	if(fc50_in.rms<fc50_in.level*fc50_in.dropout_ratio){ fc50_out->initial_pick_up=0;}
+	
+	fc50_out->pick_up=off_delay(	fc50_out->initial_pick_up,
+								   	fc50_out->pick_up,
+									fc50_in.dropout_time,
+									&(fc50_out->dropout_counter));
+
+	fc50_out->trip=		on_delay(	fc50_out->pick_up,
+								   	fc50_out->trip,
+									fc50_in.delay,
+									&(fc50_out->trip_counter));
+
+	if(fc50_out->trip==1){fc50_out->trip_latch=1;}
+
+	return fc50_out->trip_latch;
+
+}
 
 
 
