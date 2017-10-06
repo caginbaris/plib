@@ -7,7 +7,7 @@
 
 
 
-int on_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,unsigned int *count){
+int on_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,long *count){
 
 	int out;
 
@@ -32,7 +32,7 @@ int on_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,unsi
 	return out;
 
 }
-int off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,unsigned int *count){
+int off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,long *count){
 
 	int out;
 
@@ -57,7 +57,7 @@ int off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,uns
 	return out;
 
 }
-int on_off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,unsigned int *count){
+int on_off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,long *count){
 
 	int out;
 
@@ -116,7 +116,7 @@ int fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50
 
 }
 
-//function-4
+//function-5
 // Inverse TOC
 
 
@@ -125,40 +125,33 @@ int fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51
 	if (enable)
 	{
 
-		if (fc51_in.rms > fc51_in.level * 1.100f)
-		{
+		if (fc51_in.rms > fc51_in.level * 1.100f){
+
 			fc51_out->pick_up = 1;
 			fc51_out->time2trip = fc51_in.time_multiplier * (fc51_in.curve_data[0] / (powf((fc51_in.rms / fc51_in.level), fc51_in.curve_data[1]) - 1.0f) + fc51_in.curve_data[2]);
 			
 
 		}
-		if (fc51_in.rms < fc51_in.level * 1.045f)
-		{
+		if (fc51_in.rms < fc51_in.level * 1.045f){
+
 			fc51_out->pick_up = 0;
 			fc51_out->time2trip =80000;
 			
 		}
 
 
-		fc51_out->sample2trip = fc51_out->time2trip * fs;
 
-
-
-		if (fc51_out->pick_up)
-		{
+		if (fc51_out->pick_up && fc51_out->trip ==0){
 
 			fc51_out->trip_counter++;
 
-		}
-		else
-		{
+		}else{
 
 			fc51_out->trip_counter = 0;
 
 		};
 
-		if (fc51_out->trip_counter > fc51_out->sample2trip)
-		{
+		if (fc51_out->trip_counter > fc51_out->time2trip * fs){
 
 			fc51_out->trip = 1;
 			fc51_out->trip_counter = 0;
@@ -172,6 +165,116 @@ int fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51
 	return fc51_out->trip ;
 
 }
+
+//function-6
+//Undervoltage Protection
+// cs trip caution......
+
+
+int fc27(struct fc27_inputParameters fc27_in, struct fc27_outputParameters *fc27_out,int enable ){
+
+	if (enable){
+
+		if (fc27_in.rms < fc27_in.level ){
+		
+			fc27_out->pick_up = 1;
+		
+		}
+
+
+		if (fc27_in.rms > fc27_in.level*fc27_in.dropout_ratio ){
+		
+			fc27_out->pick_up = 0;
+		
+		}
+
+
+
+		if (fc27_out->pick_up && fc27_out->trip==0){
+
+			fc27_out->trip_counter++;
+
+		}else{
+
+			fc27_out->trip_counter = 0;
+
+		}
+
+
+
+		if (fc27_out->trip_counter > fc27_in.delay*fs){
+
+			fc27_out->trip = 1;
+			fc27_out->trip_counter = 0;
+
+		}
+
+	
+	}
+
+	return fc27_out->trip;
+
+}
+
+
+// function-7
+// Overvoltage Protection
+
+
+
+int fc59(struct fc59_inputParameters fc59_in, struct fc59_outputParameters *fc59_out,int enable ){
+
+	if (enable){
+
+		if (fc59_in.rms > fc59_in.level ){
+		
+			fc59_out->pick_up = 1;
+		
+		}
+
+
+		if (fc59_in.rms < fc59_in.level*fc59_in.dropout_ratio ){
+		
+			fc59_out->pick_up = 0;
+		
+		}
+
+
+
+		if (fc59_out->pick_up && fc59_out->trip==0){
+
+			fc59_out->trip_counter++;
+
+		}else{
+
+			fc59_out->trip_counter = 0;
+
+		}
+
+
+
+		if (fc59_out->trip_counter > fc59_in.delay*fs){
+
+			fc59_out->trip = 1;
+			fc59_out->trip_counter = 0;
+
+		}
+
+	
+	}
+
+	return fc59_out->trip;
+
+}
+
+
+
+
+
+
+
+
+
 
 
 
