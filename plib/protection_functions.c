@@ -101,9 +101,9 @@ int fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50
 			fc50_out->initial_pick_up = 0;
 		}
 
-		fc50_out->pick_up = off_delay(fc50_out->initial_pick_up, fc50_out->pick_up, fc50_in.dropout_time, &(fc50_out->dropout_counter));
+		fc50_out->pick_up = off_delay(fc50_out->initial_pick_up, fc50_out->pick_up, fc50_in.dropout_time*fs, &(fc50_out->dropout_counter));
 
-		fc50_out->trip = on_delay(fc50_out->pick_up, fc50_out->trip, fc50_in.delay, &(fc50_out->trip_counter));
+		fc50_out->trip = on_delay(fc50_out->pick_up, fc50_out->trip, fc50_in.delay*fs, &(fc50_out->trip_counter));
 
 		if (fc50_out->trip == 1)
 		{
@@ -128,14 +128,21 @@ int fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51
 		if (fc51_in.rms > fc51_in.level * 1.100f)
 		{
 			fc51_out->pick_up = 1;
+			fc51_out->time2trip = fc51_in.time_multiplier * (fc51_in.curve_data[0] / (powf((fc51_in.rms / fc51_in.level), fc51_in.curve_data[1]) - 1.0f) + fc51_in.curve_data[2]);
+			
+
 		}
 		if (fc51_in.rms < fc51_in.level * 1.045f)
 		{
 			fc51_out->pick_up = 0;
+			fc51_out->time2trip =80000;
+			
 		}
 
-		fc51_out->time2trip = fc51_in.time_multiplier * (fc51_in.curve_data[0] / (powf((fc51_in.rms / fc51_in.level), fc51_in.curve_data[1]) - 1.0f) + fc51_in.curve_data[2]);
+
 		fc51_out->sample2trip = fc51_out->time2trip * fs;
+
+
 
 		if (fc51_out->pick_up)
 		{
@@ -154,6 +161,7 @@ int fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51
 		{
 
 			fc51_out->trip = 1;
+			fc51_out->trip_counter = 0;
 
 		}
 
