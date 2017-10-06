@@ -2,9 +2,9 @@
 <settings version="1.0">
 	<category name="protection_functions.c">
 		<category name="Foldings">
-			<property name="Line1" type="integer">9</property>
-			<property name="Line2" type="integer">34</property>
-			<property name="Line3" type="integer">59</property>
+			<property name="Line1" type="integer">10</property>
+			<property name="Line2" type="integer">35</property>
+			<property name="Line3" type="integer">60</property>
 		</category>
 		<category name="Window">
 			<property name="Left" type="integer">-8</property>
@@ -15,5 +15,19 @@
 			<property name="Active" type="integer">1</property>
 		</category>
 	</category>
-	<category name="protection_functions.h" />
+	<category name="protection_functions.h">
+		<category name="Foldings">
+			<property name="Line1" type="integer">8</property>
+			<property name="Line2" type="integer">18</property>
+			<property name="Line3" type="integer">46</property>
+		</category>
+		<category name="Window">
+			<property name="Left" type="integer">78</property>
+			<property name="Top" type="integer">78</property>
+			<property name="Right" type="integer">1347</property>
+			<property name="Bottom" type="integer">624</property>
+			<property name="Maximized" type="integer">0</property>
+			<property name="Active" type="integer">0</property>
+		</category>
+	</category>
 </settings>

@@ -32,6 +32,7 @@ plib.lib: \
 # 
 output\protection_functions.obj: \
 	protection_functions.c \
+	"..\..\..\..\..\..\..\..\..\..\..\Program Files (x86)\PellesC\Include\math.h" \
 	protection_functions.h
 	$(CC) $(CCFLAGS) "$!" -Fo"$@"
 
