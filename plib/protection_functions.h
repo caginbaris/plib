@@ -183,8 +183,46 @@ struct fc49_outputParameters{
 
 //------ThermalProtection-End------------------------------------------------------------
 
-
 //------Breaker Failure-Start------------------------------------------------------------
+
+struct fcBF_inputParameters{
+
+	float rmsA;
+	float rmsB;
+	float rmsC;
+
+	float threshold;
+	float delay;
+
+	
+
+	unsigned int trip_input:1;
+	unsigned int CB_pos:1;
+	unsigned int CB_pos_check:1;
+
+
+	
+
+};
+
+struct fcBF_outputParameters{
+
+	
+	long trip_counter;
+	unsigned int pick_up:1;
+	unsigned int current_checked:1;
+	unsigned int trip:1;
+	unsigned int pass_flag:1;
+	unsigned int pass_flag_filtered:1;
+	
+	unsigned int pass_flag_counter;
+
+
+
+};
+
+
+
 //------Breaker Failure-End--------------------------------------------------------------
 
 

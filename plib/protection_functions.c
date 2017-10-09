@@ -386,6 +386,74 @@ void fc49(struct fc49_inputParameters fc49_in, struct fc49_outputParameters *fc4
 
 // function-11
 // Breaker Failure Protection
+// single invocation
+
+
+void fcBF(struct fcBF_inputParameters fcBF_in, struct fcBF_outputParameters *fcBF_out,int enable){
+
+	
+	
+
+
+if(enable){
+
+		if(fcBF_in.trip_input && fcBF_out->trip==0){
+
+
+		fcBF_out->current_checked=(fcBF_in.rmsA<fcBF_in.threshold && fcBF_in.rmsB<fcBF_in.threshold && fcBF_in.rmsC<fcBF_in.threshold);
+
+
+		if(fcBF_in.CB_pos_check){
+
+		      fcBF_out->pass_flag=(fcBF_out->current_checked && !(fcBF_in.CB_pos));
+			
+			}else{
+			
+			fcBF_out->pass_flag=fcBF_out->current_checked;	
+			
+		}
+
+			
+		// for breaking latency, fcBF_out->pass_flag initialised to 1, 20ms delay entered
+		fcBF_out->pass_flag_filtered=off_delay(fcBF_out->pass_flag,fcBF_out->pass_flag_filtered,fs/50, &(fcBF_out->pass_flag_counter));
+
+
+		if(fcBF_out->pass_flag_filtered==0){
+				
+				fcBF_out->pick_up=1;
+
+		}else{
+
+				fcBF_out->pick_up=0;
+					
+		}
+
+
+		if(fcBF_out->pick_up==1 && fcBF_out->trip==0 ){
+			
+			fcBF_out->trip_counter++;
+			
+			}else{
+			
+			
+			fcBF_out->trip_counter=0;
+			
+			}
+
+
+		if (fcBF_out->trip_counter > fcBF_in.delay*fs){
+
+			fcBF_out->trip = 1;
+			fcBF_out->trip_counter = 0;
+
+		}
+
+	}
+   }
+}
+
+
+                                                                                                                                                                                                                                                                                 
 
 
 
@@ -490,7 +558,7 @@ int fcUNBd(struct fcUNBd_inputParameters fcUNBd_in, struct fcUNBd_outputParamete
 
 // Function 15
 // Filter Unbalance Protection-Trip Stage
-// caution : vectoral difference has to be used
+// caution : vectoral difference has to be used @ input
 
 
 int fcUNBi(struct fcUNBi_inputParameters fcUNBi_in, struct fcUNBi_outputParameters *fcUNBi_out,int enable ){
@@ -500,7 +568,7 @@ int fcUNBi(struct fcUNBi_inputParameters fcUNBi_in, struct fcUNBi_outputParamete
 		if (fcUNBi_in.rms > fcUNBi_in.level * 1.100f){
 
 			fcUNBi_out->pick_up = 1;
-			fcUNBi_out->time2trip = fcUNBi_in.time_multiplier * (fcUNBi_in.curve_data[0] / (100.0f*(fcUNBi_in.rms/fcUNBi_in.level)-97.0f)+0.02);
+			fcUNBi_out->time2trip = fcUNBi_in.time_multiplier * (101.2f / (100.0f*(fcUNBi_in.rms/fcUNBi_in.level)-97.0f)+0.02);
 			
 
 		}
