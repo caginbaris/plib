@@ -102,7 +102,7 @@ int on_off_delay(unsigned int input, unsigned int mem, unsigned int qual_sample,
 //function-4
 // Definite TOC
 
-int fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50_out, int enable)
+void fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50_out, int enable)
 {
 
 	if (enable)
@@ -128,14 +128,12 @@ int fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50
 
 	}
 
-	return fc50_out->trip_latch;
-
 }
 
 //function-5
 // Inverse TOC
 
-int fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51_out, int enable)
+void fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51_out, int enable)
 {
 
 	if (enable)
@@ -179,15 +177,13 @@ int fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51
 
 	}
 
-	return fc51_out->trip;
-
 }
 
 //function-6
 //Undervoltage Protection
-// cs trip caution...... (has to set externally by trigger of trip)
+// cs trip caution...... (has to set externally by trigger of trip, but can be integrated)
 
-int fc27(struct fc27_inputParameters fc27_in, struct fc27_outputParameters *fc27_out, int enable)
+void fc27(struct fc27_inputParameters fc27_in, struct fc27_outputParameters *fc27_out, int enable)
 {
 
 	if (enable)
@@ -230,14 +226,12 @@ int fc27(struct fc27_inputParameters fc27_in, struct fc27_outputParameters *fc27
 
 	}
 
-	return fc27_out->trip;
-
 }
 
 // function-7
 // Overvoltage Protection
 
-int fc59(struct fc59_inputParameters fc59_in, struct fc59_outputParameters *fc59_out, int enable)
+void fc59(struct fc59_inputParameters fc59_in, struct fc59_outputParameters *fc59_out, int enable)
 {
 
 	if (enable)
@@ -280,14 +274,12 @@ int fc59(struct fc59_inputParameters fc59_in, struct fc59_outputParameters *fc59
 
 	}
 
-	return fc59_out->trip;
-
 }
 
 // function-8
 // Definite TOC Negative Seq. Protection
 
-int fc46d(struct fc46d_inputParameters fc46d_in, struct fc46d_outputParameters *fc46d_out, int enable)
+void fc46d(struct fc46d_inputParameters fc46d_in, struct fc46d_outputParameters *fc46d_out, int enable)
 {
 
 	if (enable && (fc46d_in.rms > 0.1f * fc46d_in.level && fc46d_in.rms < 10.0f * fc46d_in.level))
@@ -313,14 +305,12 @@ int fc46d(struct fc46d_inputParameters fc46d_in, struct fc46d_outputParameters *
 
 	}
 
-	return fc46d_out->trip_latch;
-
 }
 
 // function-9
 // Inverse TOC Negative Seq. Protection
 
-int fc46i(struct fc46i_inputParameters fc46i_in, struct fc46i_outputParameters *fc46i_out, int enable)
+void fc46i(struct fc46i_inputParameters fc46i_in, struct fc46i_outputParameters *fc46i_out, int enable)
 {
 
 	if (enable && (fc46i_in.rms > 0.1f * fc46i_in.level && fc46i_in.rms < 10.0f * fc46i_in.level))
@@ -363,8 +353,6 @@ int fc46i(struct fc46i_inputParameters fc46i_in, struct fc46i_outputParameters *
 		}
 
 	}
-
-	return fc46i_out->trip;
 
 }
 
@@ -474,7 +462,7 @@ void fcBF(struct fcBF_inputParameters fcBF_in, struct fcBF_outputParameters *fcB
 // Undercurrent Protection
 // bs is CB input
 
-int fc37(struct fc37_inputParameters fc37_in, struct fc37_outputParameters *fc37_out, int enable)
+void fc37(struct fc37_inputParameters fc37_in, struct fc37_outputParameters *fc37_out, int enable)
 {
 
 	if (enable)
@@ -517,7 +505,6 @@ int fc37(struct fc37_inputParameters fc37_in, struct fc37_outputParameters *fc37
 
 	}
 
-	return fc37_out->trip;
 
 }
 
@@ -525,7 +512,7 @@ int fc37(struct fc37_inputParameters fc37_in, struct fc37_outputParameters *fc37
 // Filter Unbalance Protection-Alarm Stage
 // caution : vectoral difference has to be used
 
-int fcUNBd(struct fcUNBd_inputParameters fcUNBd_in, struct fcUNBd_outputParameters *fcUNBd_out, int enable)
+void fcUNBd(struct fcUNBd_inputParameters fcUNBd_in, struct fcUNBd_outputParameters *fcUNBd_out, int enable)
 {
 
 	if (enable)
@@ -568,15 +555,13 @@ int fcUNBd(struct fcUNBd_inputParameters fcUNBd_in, struct fcUNBd_outputParamete
 
 	}
 
-	return fcUNBd_out->trip;
-
 }
 
 // Function 15
 // Filter Unbalance Protection-Trip Stage
 // caution : vectoral difference has to be used @ input
 
-int fcUNBi(struct fcUNBi_inputParameters fcUNBi_in, struct fcUNBi_outputParameters *fcUNBi_out, int enable)
+void fcUNBi(struct fcUNBi_inputParameters fcUNBi_in, struct fcUNBi_outputParameters *fcUNBi_out, int enable)
 {
 
 	if (enable)
@@ -620,14 +605,12 @@ int fcUNBi(struct fcUNBi_inputParameters fcUNBi_in, struct fcUNBi_outputParamete
 
 	}
 
-	return fcUNBi_out->trip;
-
 }
 
 // Function 16
 // Filter PVP definite
 
-int fcPVPd(struct fcPVPd_inputParameters fcPVPd_in, struct fcPVPd_outputParameters *fcPVPd_out, int enable)
+void fcPVPd(struct fcPVPd_inputParameters fcPVPd_in, struct fcPVPd_outputParameters *fcPVPd_out, int enable)
 {
 
 	if (enable)
@@ -670,14 +653,12 @@ int fcPVPd(struct fcPVPd_inputParameters fcPVPd_in, struct fcPVPd_outputParamete
 
 	}
 
-	return fcPVPd_out->trip;
-
 }
 
 // Function 17
 // Filter PVP-Trip Stage
 
-int fcPVPi(struct fcPVPi_inputParameters fcPVPi_in, struct fcPVPi_outputParameters *fcPVPi_out, int enable)
+void fcPVPi(struct fcPVPi_inputParameters fcPVPi_in, struct fcPVPi_outputParameters *fcPVPi_out, int enable)
 {
 
 	if (enable)
@@ -720,7 +701,5 @@ int fcPVPi(struct fcPVPi_inputParameters fcPVPi_in, struct fcPVPi_outputParamete
 		}
 
 	}
-
-	return fcPVPi_out->trip;
 
 }

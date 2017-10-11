@@ -28,7 +28,7 @@ struct fc50_outputParameters {
 
 };
 
-int fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50_out, int enable);
+void fc50(struct fc50_inputParameters fc50_in, struct fc50_outputParameters *fc50_out, int enable);
 //------Definite Time Overcurrent-End---------------------------------------------------------------------
 
 
@@ -53,7 +53,7 @@ struct fc51_outputParameters {
 
 };
 
-int fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51_out,int enable );
+void fc51(struct fc51_inputParameters fc51_in, struct fc51_outputParameters *fc51_out,int enable );
 
 //------Inverse Time Overcurrent-End--------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ struct fc27_outputParameters{
 
 };
 
-int fc27(struct fc27_inputParameters fc27_in, struct fc27_outputParameters *fc27_out,int enable );
+void fc27(struct fc27_inputParameters fc27_in, struct fc27_outputParameters *fc27_out,int enable );
 
 //------UnderVoltageProtection-End--------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ struct fc59_outputParameters{
 
 };
 
-int fc59(struct fc59_inputParameters fc59_in, struct fc59_outputParameters *fc59_out,int enable );
+void fc59(struct fc59_inputParameters fc59_in, struct fc59_outputParameters *fc59_out,int enable );
 
 //------OverVoltageProtection-End--------------------------------------------------------------------
 
@@ -156,6 +156,9 @@ struct fc46i_outputParameters {
 
 };
 
+void fc46d(struct fc46d_inputParameters fc46d_in, struct fc46d_outputParameters *fc46d_out, int enable);
+void fc46i(struct fc46i_inputParameters fc46i_in, struct fc46i_outputParameters *fc46i_out, int enable);
+
 //------NegativeSequenceProtection-End---------------------------------------------------
 
 
@@ -180,6 +183,8 @@ struct fc49_outputParameters{
 	
 
 };
+
+void fc49(struct fc49_inputParameters fc49_in, struct fc49_outputParameters *fc49_out, int enable);
 
 //------ThermalProtection-End------------------------------------------------------------
 
@@ -224,6 +229,9 @@ struct fcBF_outputParameters{
 };
 
 
+void fcBF(struct fcBF_inputParameters fcBF_in, struct fcBF_outputParameters *fcBF_out, int enable);
+
+
 
 //------Breaker Failure-End--------------------------------------------------------------
 
@@ -247,6 +255,8 @@ struct fc37_outputParameters{
 	unsigned int trip:1;
 
 };
+
+void fc37(struct fc37_inputParameters fc37_in, struct fc37_outputParameters *fc37_out, int enable);
 
 //------UnderCurrent-End--------------------------------------------------------------
 
@@ -292,6 +302,10 @@ struct fcUNBi_outputParameters{
 	unsigned int trip:1;
 };
 
+
+void fcUNBd(struct fcUNBd_inputParameters fcUNBd_in, struct fcUNBd_outputParameters *fcUNBd_out, int enable);
+void fcUNBi(struct fcUNBi_inputParameters fcUNBi_in, struct fcUNBi_outputParameters *fcUNBi_out, int enable);
+
 //------Unbalace-Start------------------------------------------------------------
 
 struct fcPVPd_inputParameters{
@@ -332,5 +346,8 @@ struct fcPVPi_outputParameters{
 	unsigned int pick_up:1;
 	unsigned int trip:1;
 };
+
+void fcPVPd(struct fcPVPd_inputParameters fcPVPd_in, struct fcPVPd_outputParameters *fcPVPd_out, int enable);
+void fcPVPi(struct fcPVPi_inputParameters fcPVPi_in, struct fcPVPi_outputParameters *fcPVPi_out, int enable);
 
 
