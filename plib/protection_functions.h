@@ -209,13 +209,15 @@ struct fcBF_outputParameters{
 
 	
 	long trip_counter;
+	long pass_flag_counter;
+
 	unsigned int pick_up:1;
 	unsigned int current_checked:1;
 	unsigned int trip:1;
 	unsigned int pass_flag:1;
 	unsigned int pass_flag_filtered:1;
 	
-	unsigned int pass_flag_counter;
+	
 
 
 
